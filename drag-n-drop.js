@@ -1,5 +1,6 @@
 $(document).ready(function() {
   //grid variables
+  var counter = 1
   var letters = [
     "A",
     "B",
@@ -94,8 +95,7 @@ $(document).ready(function() {
 
 	fridgeMagnet.attr("ondragstart", "drag(event)");
 	
-	fridgeMagnet.attr("id" , "1");
-
+	fridgeMagnet.attr("id", counter++)
     // 11. Lastly append the fridgeMagnet variable to the "#display" div (provided);
     // Again you can see we use that find, and once its found we append the item
     $("#letter").append(fridgeMagnet);
