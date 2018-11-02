@@ -1,6 +1,6 @@
 $(document).ready(function() {
   //grid variables
-  var counter = 1
+  var counter = 1;
   var letters = [
     "A",
     "B",
@@ -93,9 +93,21 @@ $(document).ready(function() {
 
     fridgeMagnet.attr("draggable", true);
 
-	fridgeMagnet.attr("ondragstart", "drag(event)");
-	
-	fridgeMagnet.attr("id", counter++)
+    fridgeMagnet.attr("ondragstart", "drag(event)");
+
+    fridgeMagnet.attr("id", counter++);
+
+    fridgeMagnet.css({color: getRandomColor()});
+
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    
     // 11. Lastly append the fridgeMagnet variable to the "#display" div (provided);
     // Again you can see we use that find, and once its found we append the item
     $("#letter").append(fridgeMagnet);
