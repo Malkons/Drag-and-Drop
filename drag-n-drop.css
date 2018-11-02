@@ -1,0 +1,61 @@
+body {
+  font-family: Signika Negative, Asap, sans-serif;
+}
+
+#container {
+  height: 801px;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+}
+
+.box {
+  background-color: #91e600;
+  text-align: center;
+  font-family: Asap, Avenir, Arial, sans-serif;
+  width: 196px;
+  height: 100px;
+  line-height: 100px;
+  color: black;
+  position: absolute;
+  top: 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.letter {
+  width: 30px;
+  height: 30px;
+  border-style: solid;
+  padding: 2px;
+  float: left;
+  margin: 2px;
+}
+
+.letter-button-color {
+  color: darkcyan;
+}
+
+.fridge-color {
+  color: orange;
+}
+
+#display {
+  margin-top: 78px;
+  height: 500px;
+  width: 220px;
+  margin-left: 60px;
+}
+
+#buttons {
+  padding-top: 60px;
+}
+
+#clear {
+  margin-left: 20px;
+  font-size: 25px;
+  color: black;
+  border-style: solid;
+  width: 100px;
+}
