@@ -9,26 +9,25 @@
 </head>
 
 <body>
+    <div class="controls">
+        <ul>
+            <li class="controlsTitle">Options</li>
+            <li>
+                <label><input type="checkbox" name="snap" id="snap" value="1" /> Snap end position to grid</label>
+            </li>
+            <li>
+                <label><input type="checkbox" name="liveSnap" id="liveSnap" value="1" /> Live snap</label>
+            </li>
+        </ul>
+    </div>
     <div id="container"></div>
     <div id="buttons"></div>
     <div id="letter"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/CSSPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/utils/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="drag-n-drop.js"></script>
-    <script>
-            function allowDrop(ev) {
-                ev.preventDefault();
-            }
-            
-            function drag(ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-            }
-            
-            function drop(ev) {
-                ev.preventDefault();
-                var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
-            }
-            </script>
 </body>
 
 </html>

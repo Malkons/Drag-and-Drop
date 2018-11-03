@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  //grid variables
   var counter = 1;
   var letters = [
     "A",
@@ -31,10 +30,12 @@ $(document).ready(function() {
     "_"
   ];
 
-  var $container = $("#container"),
+  var $snap = $("#snap"),
+    $liveSnap = $("#liveSnap"),
+    $container = $("#container"),
     gridWidth = 100,
     gridHeight = 100,
-    gridRows = 5,
+    gridRows = 6,
     gridColumns = 5,
     i,
     x,
@@ -53,11 +54,62 @@ $(document).ready(function() {
         top: y,
         left: x
       })
-      .attr("ondrop", "drop(event)")
-      .attr("ondragover", "allowDrop(event)")
       .prependTo($container);
-  } //end of for loop
+  }
 
+  //set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
+  TweenLite.set($container, {
+    height: gridRows * gridHeight + 1,
+    width: gridColumns * gridWidth + 1
+  });
+  TweenLite.set(".box", {
+    width: gridWidth,
+    height: gridHeight,
+    lineHeight: gridHeight + "px"
+  });
+
+  //the update() function is what creates the Draggable according to the options selected (snapping).
+  function update() {
+    var snap = $snap.prop("checked"),
+      liveSnap = $liveSnap.prop("checked");
+    Draggable.create(".box", {
+      bounds: $container,
+      edgeResistance: 0.65,
+      type: "x,y",
+      throwProps: true,
+      autoScroll: true,
+      liveSnap: liveSnap,
+      snap: {
+        x: function(endValue) {
+          return snap || liveSnap
+            ? Math.round(endValue / gridWidth) * gridWidth
+            : endValue;
+        },
+        y: function(endValue) {
+          return snap || liveSnap
+            ? Math.round(endValue / gridHeight) * gridHeight
+            : endValue;
+        }
+      }
+    });
+  } //end of update function
+
+  //when the user toggles one of the "snap" modes, make the necessary updates...
+  $snap.on("change", applySnap);
+  $liveSnap.on("change", applySnap);
+
+  function applySnap() {
+    if ($snap.prop("checked") || $liveSnap.prop("checked")) {
+      $(".box").each(function(index, element) {
+        TweenLite.to(element, 0.5, {
+          x: Math.round(element._gsTransform.x / gridWidth) * gridWidth,
+          y: Math.round(element._gsTransform.y / gridHeight) * gridHeight,
+          delay: 0.1,
+          ease: Power2.easeInOut
+        });
+      });
+    }
+  } //end of applySnap function
   for (var i = 0; i < letters.length; i++) {
     // Inside the loop...
 
@@ -84,32 +136,30 @@ $(document).ready(function() {
     var fridgeMagnet = $("<div>");
 
     // 9. Give each "fridgeMagnet" the following classes: "letter fridge-color".
-    fridgeMagnet.addClass("letter fridge-color drag");
+    fridgeMagnet.addClass("box");
 
     // 10. Then chain the following code onto the "fridgeMagnet" variable: .text($(this).attr("data-letter"))
     // attr acts as both a setter and a getter for attributes depending on whether we supply one argument or two
     // NOTE: There IS a $(data) jQuery method, but it doesn't do what you'd expect. So just use attr.
     fridgeMagnet.text($(this).attr("data-letter"));
 
-    fridgeMagnet.attr("draggable", true);
-
-    fridgeMagnet.attr("ondragstart", "drag(event)");
-
     fridgeMagnet.attr("id", counter++);
 
-    fridgeMagnet.css({color: getRandomColor()});
+    fridgeMagnet.css({ color: getRandomColor() });
 
     function getRandomColor() {
-      var letters = '0123456789ABCDEF';
-      var color = '#';
+      var letters = "0123456789ABCDEF";
+      var color = "#";
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
     }
-    
+
     // 11. Lastly append the fridgeMagnet variable to the "#display" div (provided);
     // Again you can see we use that find, and once its found we append the item
-    $("#letter").append(fridgeMagnet);
+    $("#container").append(fridgeMagnet);
+    update();
   });
-}); //End of document.ready
+  update();
+}); //end of document ready
