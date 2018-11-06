@@ -48,7 +48,7 @@ $(document).ready(function() {
     $("<div/>")
       .css({
         position: "absolute",
-        border: "1px solid #454545",
+        border: "1px solid #fffff",
         width: gridWidth - 1,
         height: gridHeight - 1,
         top: y,
